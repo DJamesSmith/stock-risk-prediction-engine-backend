@@ -107,9 +107,7 @@ def apply_predictions(holding, feature_row, models, predicted_at):
 
     if "forecast" in models:
         forecast = models["forecast"]
-        holding.predicted_direction, holding.prediction_confidence = predict_one(
-            forecast["model"], feature_row[forecast["features"]]
-        )
+        holding.predicted_direction, holding.prediction_confidence = predict_one(forecast["model"], feature_row[forecast["features"]])
         holding.forecast_model_version = forecast["version"]
 
     holding.last_predicted_at = predicted_at
@@ -159,10 +157,8 @@ def recompute_holdings(holdings, model_types):
     publish_risk_changes(risk_changes)
 
     model_versions = {model_type: loaded["version"] for model_type, loaded in models.items()}
-    ApplicationLogger.info(
-        f"Predictions finished: models={model_types}, checked={len(holdings)}, "
-        f"updated={len(updated_holdings)}, skipped={len(skipped_holdings)}, versions={model_versions}"
-    )
+    ApplicationLogger.info(f"Predictions finished: models={model_types}, checked={len(holdings)}, updated={len(updated_holdings)}, skipped={len(skipped_holdings)}, versions={model_versions}")
+
     return {
         "models": model_versions,
         "holdings_checked": len(holdings),
